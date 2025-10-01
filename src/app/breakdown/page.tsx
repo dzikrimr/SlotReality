@@ -14,60 +14,30 @@ export default function Breakdown() {
         <div className="grid md:grid-cols-2 gap-6 mb-2">
           <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 shadow-xl p-6">
             <div className="font-mono text-xs leading-relaxed">
-              <div className="text-purple-400">
-                public class <span className="text-blue-400">JudiOnline</span> {'{'}
-              </div>
-              <div className="ml-4 text-purple-400">
-                public static void <span className="text-yellow-400">main</span>(String[] args) {'{'}
-              </div>
-
+              <div className="text-purple-400">public class <span className="text-blue-400">JudiOnline</span> {'{'}</div>
+              <div className="ml-4 text-purple-400">public static void <span className="text-yellow-400">main</span>(String[] args) {'{'}</div>
               <div className="ml-8 text-gray-400">
-                <span>// PROGRAM JUDI YANG SELALU MEMBUAT PEMAIN KALAH</span>
+                <span>PROGRAM JUDI YANG SELALU MEMBUAT PEMAIN KALAH</span>
               </div>
-
               <div className="ml-8 mt-4 text-gray-400">
-                <span>// 1. TAMPILAN PALSU: Seolah-olah acak, tapi sebenarnya diatur</span>
+                <span>1. TAMPILAN PALSU: Seolah-olah acak, tapi sebenarnya diatur</span>
               </div>
-
-              <div className="ml-8 text-blue-300">
-                double hasilAcak = Math.random();{' '}
-                <span className="text-gray-400">// Menghasilkan angka 0-1</span>
-              </div>
-
+              <div className="ml-8 text-blue-300">double hasilAcak = Math.random(); <span className="text-gray-400">// Menghasilkan angka 0-1</span></div>
               <div className="ml-8 mt-4 text-gray-400">
-                <span>
-                  // 2. MANIPULASI: Pemain hanya menang jika hasil &lt; 0.05 (hanya 5% peluang)
-                </span>
+                <span>2. MANIPULASI: Pemain hanya menang jika hasil &lt; 0.05 (hanya 5% peluang)</span>
               </div>
-
-              <div className="ml-8 text-purple-400">
-                if <span className="text-yellow-300">(hasilAcak &lt; 0.05)</span> {'{'}
-              </div>
-
-              <div className="ml-12 text-blue-300">
-                System.out.println(<span className="text-green-400">&quot;SELAMAT! ANDA MENANG!&quot;</span>);
-              </div>
-
+              <div className="ml-8 text-purple-400">if <span className="text-yellow-300">(hasilAcak &lt; 0.05)</span> {'{'}</div>
+              <div className="ml-12 text-blue-300">System.out.println(<span className="text-green-400">'SELAMAT! ANDA MENANG!'</span>);</div>
               <div className="ml-8 text-purple-400">{'}'} else {'{'}</div>
-
               <div className="ml-12 text-gray-400">
-                <span>// 3. PEMAIN SELALU KALAH: 95% kemungkinan kode ini dijalankan</span>
+                <div>3. PEMAIN SELALU KALAH: 95% kemungkinan kode ini dijalankan</div>
               </div>
-
-              <div className="ml-12 text-blue-300">
-                System.out.println(<span className="text-green-400">&quot;ANDA KALAH! COBA LAGI!&quot;</span>);
-              </div>
-
+              <div className="ml-12 text-blue-300">System.out.println(<span className="text-green-400">'ANDA KALAH! COBA LAGI!'</span>);</div>
               <div className="ml-8 text-purple-400">{'}'}</div>
-
               <div className="ml-8 mt-4 text-gray-400">
-                <span>// 4. TRIK PSIKOLOGIS: Memancing pemain untuk terus mencoba</span>
+                <span>4. TRIK PSIKOLOGIS: Memancing pemain untuk terus mencoba</span>
               </div>
-
-              <div className="ml-8 text-blue-300">
-                System.out.println(<span className="text-green-400">&quot;Sedikit lagi menang! Coba lagi!&quot;</span>);
-              </div>
-
+              <div className="ml-8 text-blue-300">System.out.println(<span className="text-green-400">'Sedikit lagi menang! Coba lagi!'</span>);</div>
               <div className="ml-4 text-purple-400">{'}'}</div>
               <div className="text-purple-400">{'}'}</div>
             </div>
@@ -92,8 +62,8 @@ export default function Breakdown() {
 
         <div className="bg-red-900/20 border border-red-500/30 rounded-xl backdrop-blur-sm text-center mt-6 p-2">
           <p className="text-slate-200 leading-relaxed italic">
-            Ini memperlihatkan bahwa peluang kemenangan tidak benar-benar acak. Operator bisa menentukan persentasenya,
-            misalnya hanya 10% dari setiap putaran yang berpeluang menang. Artinya, sebagian besar pemain akan tetap kalah
+            Ini memperlihatkan bahwa peluang kemenangan tidak benar-benar acak. Operator bisa menentukan persentasenya, 
+            misalnya hanya 10% dari setiap putaran yang berpeluang menang. Artinya, sebagian besar pemain akan tetap kalah 
             meskipun merasa sedang bermain fair.
           </p>
         </div>
