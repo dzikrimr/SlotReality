@@ -10,7 +10,7 @@ if (typeof window !== "undefined") {
 
 const aboutTexts = [
   `Kami Mahasiswa dari Universitas Brawijaya, Fakultas Ilmu Komputer, berangkat dari keresahan terhadap maraknya fenomena judi online di Indonesia.\n\nMelihat bagaimana perjudian daring merenggut tidak hanya aspek finansial, tetapi juga hubungan keluarga dan masa depan generasi muda, kami terdorong untuk menghadirkan sebuah karya interaktif berbasis web yang mampu memberikan edukasi sekaligus pengalaman langsung tentang bahaya yang tersembunyi di balik permainan slot digital.`,
-  `Melalui SlotReality, kami berusaha menyajikan simulasi, data, dan narasi nyata yang diolah dalam bentuk visual dan interaktif, agar siapa pun yang mengaksesnya dapat memahami risiko judi online dengan cara yang lebih mendalam dan membekas.\n\nHarapan kami, karya ini dapat menjadi kontribusi kecil dari lingkungan akademis untuk masyarakat luas, sekaligus bukti bahwa teknologi tidak hanya bisa dimanfaatkan untuk hiburan, tetapi juga sebagai sarana edukasi dan penyadaran akan isu sosial yang semakin mendesak.`,
+  `Melalui SlotReality, kami berusaha menyajikan simulasi, data, dan narasi nyata yang diolah dalam bentuk visual dan interaktif, agar siapa pun yang mengaksesnya dapat memahami risiko judi online dengan cara yang lebih mendalam dan membekas.\n\nHarapan kami, ini dapat menjadi kontribusi kecil dari lingkungan akademis untuk masyarakat luas, sekaligus bukti bahwa teknologi tidak hanya bisa dimanfaatkan untuk hiburan, tetapi juga sebagai sarana edukasi dan penyadaran akan isu sosial yang semakin mendesak.`,
   `TIM PECEL SUKUN\n\nADE NUGROHO - DZIKRI MURTADLO - CAMILA CAHYA ARIFAH`
 ];
 

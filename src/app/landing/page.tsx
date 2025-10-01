@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 
@@ -603,7 +603,7 @@ const Landing = () => {
           }}
         >
           <Image
-            src="/images/unmasked_man.png"
+            src="/images/unmaskedman.png"
             alt="Unmasked Man"
             width={600}
             height={700}
@@ -613,7 +613,7 @@ const Landing = () => {
               objectFit: "contain",
             }}
             onError={() => {
-              console.error("Failed to load unmasked_man.png");
+              console.error("Failed to load unmaskedman.png");
             }}
             onLoad={() => {
               console.log("Unmasked man image loaded successfully");
