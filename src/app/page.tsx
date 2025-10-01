@@ -1,5 +1,7 @@
+
 "use client";
 
+import Navbar from "@/components/Navbar";
 import React from 'react';
 import Landing from './landing/page'
 import Simulation from './simulation/page';
@@ -12,6 +14,7 @@ import MapsWrapper from './maps/maps-wrapper';``
 const Home: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-900 text-white overflow-x-hidden">
+      <Navbar />
       <Landing />
       <Simulation />
       <Maps />
