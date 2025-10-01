@@ -117,9 +117,12 @@ export default function HelpAndAbout() {
                   Bantuan?
                 </h2>
 
+              {/* HOTLINE STOPJUDOL */}
+              <a href="https://wa.me/+6281110015080" target="_blank" rel="noopener noreferrer" className="w-full">
                 <button className="w-full bg-[#1a2340] text-white text-sm font-bold px-2 py-3 rounded-xl shadow-xl hover:bg-[#0d1527] transition-all hover:shadow-2xl border-2 border-[#2a3558] mt-4">
                   HOTLINE STOPJUDOL
                 </button>
+              </a>
               </div>
             </div>
           </div>
@@ -144,9 +147,12 @@ export default function HelpAndAbout() {
                   className="object-contain"
                 />
               </div>
-              <button className="w-full bg-[#1a2340] text-white text-sm font-bold px-2 py-3 rounded-xl shadow-xl hover:bg-[#0d1527] transition-all hover:shadow-2xl border-2 border-[#2a3558]">
-                KEPPRES NO. 21/2024
-              </button>
+              {/* KEPPRES NO. 21/2024 */}
+              <a href="https://drive.google.com/file/d/1l_6zeNKlwMusIGL-RkeTevx9y9kcSwEh/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="w-full">
+                <button className="w-full bg-[#1a2340] text-white text-sm font-bold px-2 py-3 rounded-xl shadow-xl hover:bg-[#0d1527] transition-all hover:shadow-2xl border-2 border-[#2a3558]">
+                  KEPPRES NO. 21/2024
+                </button>
+              </a>
             </div>
           </div>
         </div>
