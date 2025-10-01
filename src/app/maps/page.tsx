@@ -166,7 +166,7 @@ export default function IndonesiaMap() {
     className="relative min-h-screen bg-[#0A0F1F] flex items-center justify-center p-8"
     onMouseMove={handleMouseMove}
   >
-    <div className="absolute bottom-0 left-0 w-full h-80 bg-gradient-to-t from-[#737373]/40 to-transparent"></div>
+    <div className="absolute bottom-0 left-0 w-full h-80 bg-[#0A0F1F]"></div>
     <div className="w-full max-w-7xl">
       <div className="flex flex-col lg:flex-row items-start justify-between gap-8 h-full">
         <div className="text-white lg:w-1/4 relative h-[36rem] flex flex-col justify-end">
@@ -193,7 +193,7 @@ export default function IndonesiaMap() {
               </svg>
             </button>
 
-            <div className="bg-[#0A0F1F] backdrop-blur shadow text-lg text-white flex items-center justify-center h-10 rounded-md px-4">
+            <div className="bg-[#D9D9D9] opacity-80 backdrop-blur shadow text-lg text-[#0A0F1F] flex items-center justify-center h-10 rounded-md px-4">
               Source from Google Trend
             </div>
           </div>

@@ -1,15 +1,17 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { useRouter, usePathname } from "next/navigation";
 
-interface NavbarProps {
-  smoothScrollTo?: (target: string) => void;
-}
-
-const Navbar: React.FC<NavbarProps> = ({ smoothScrollTo }) => {
+const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname(); // Ambil path saat ini
+
+  // Fungsi untuk cek apakah menu aktif
+  const isActive = (path: string) => pathname === path;
 
   return (
     <div className="fixed top-8 left-8 right-8 z-20">
@@ -30,22 +32,28 @@ const Navbar: React.FC<NavbarProps> = ({ smoothScrollTo }) => {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center bg-white/15 backdrop-blur-lg rounded-2xl border border-white/30 shadow-2xl h-10 px-4 md:px-6">
           <button
-            className="text-white hover:text-purple-300 transition-all duration-300 font-bold tracking-widest cursor-pointer py-3 px-5 text-base"
-            onClick={() => smoothScrollTo?.("top")}
+            className={`${
+              isActive("/") ? "font-bold" : "font-medium text-white/80"
+            } text-white hover:text-purple-300 transition-all duration-300 tracking-widest cursor-pointer py-3 px-5 text-base`}
+            onClick={() => router.push("/")}
           >
             Home
           </button>
           <div className="h-6 w-px bg-white/40 mx-2"></div>
           <button
-            className="text-white/80 hover:text-purple-300 transition-all duration-300 font-bold tracking-widest cursor-pointer py-3 px-5 text-base"
-            onClick={() => smoothScrollTo?.("50%")}
+            className={`${
+              isActive("/simulation") ? "font-bold" : "font-medium text-white/80"
+            } text-white hover:text-purple-300 transition-all duration-300 tracking-widest cursor-pointer py-3 px-5 text-base`}
+            onClick={() => router.push("/simulation")}
           >
             Experience
           </button>
           <div className="h-6 w-px bg-white/40 mx-2"></div>
           <button
-            className="text-white/80 hover:text-purple-300 transition-all duration-300 font-bold tracking-widest cursor-pointer py-3 px-5 text-base"
-            onClick={() => smoothScrollTo?.("bottom")}
+            className={`${
+              isActive("/maps-aio") ? "font-bold" : "font-medium text-white/80"
+            } text-white hover:text-purple-300 transition-all duration-300 tracking-widest cursor-pointer py-3 px-5 text-base`}
+            onClick={() => router.push("/maps-aio")}
           >
             Insights
           </button>
@@ -54,8 +62,10 @@ const Navbar: React.FC<NavbarProps> = ({ smoothScrollTo }) => {
         {/* Support (Desktop only) */}
         <div className="hidden md:block flex-shrink-0">
           <button
-            className="text-white font-extrabold text-lg hover:text-purple-300 transition-all duration-300 tracking-widest cursor-pointer"
-            onClick={() => console.log("Support clicked")}
+            className={`${
+              isActive("/help") ? "font-bold" : "font-medium text-white/80"
+            } text-white font-bold text-lg hover:text-purple-300 transition-all duration-300 tracking-widest cursor-pointer`}
+            onClick={() => router.push("/help")}
           >
             SUPPORT
           </button>
@@ -76,9 +86,11 @@ const Navbar: React.FC<NavbarProps> = ({ smoothScrollTo }) => {
       {isOpen && (
         <div className="fixed inset-0 z-30 bg-[#0A0F1F]/85 flex flex-col justify-center items-center space-y-6">
           <button
-            className="text-white text-2xl font-bold tracking-widest hover:text-purple-300 transition"
+            className={`${
+              isActive("/") ? "font-bold" : "font-medium"
+            } text-white text-2xl tracking-widest hover:text-purple-300 transition`}
             onClick={() => {
-              smoothScrollTo?.("top");
+              router.push("/");
               setIsOpen(false);
             }}
           >
@@ -87,9 +99,11 @@ const Navbar: React.FC<NavbarProps> = ({ smoothScrollTo }) => {
           <div className="h-px w-40 bg-white/40"></div>
 
           <button
-            className="text-white text-2xl font-bold tracking-widest hover:text-purple-300 transition"
+            className={`${
+              isActive("/simulation") ? "font-bold" : "font-medium"
+            } text-white text-2xl tracking-widest hover:text-purple-300 transition`}
             onClick={() => {
-              smoothScrollTo?.("50%");
+              router.push("/simulation");
               setIsOpen(false);
             }}
           >
@@ -98,9 +112,11 @@ const Navbar: React.FC<NavbarProps> = ({ smoothScrollTo }) => {
           <div className="h-px w-40 bg-white/40"></div>
 
           <button
-            className="text-white text-2xl font-bold tracking-widest hover:text-purple-300 transition"
+            className={`${
+              isActive("/maps-aio") ? "font-bold" : "font-medium"
+            } text-white text-2xl tracking-widest hover:text-purple-300 transition`}
             onClick={() => {
-              smoothScrollTo?.("bottom");
+              router.push("/maps-aio");
               setIsOpen(false);
             }}
           >
@@ -109,9 +125,11 @@ const Navbar: React.FC<NavbarProps> = ({ smoothScrollTo }) => {
           <div className="h-px w-40 bg-white/40"></div>
 
           <button
-            className="text-white text-2xl font-extrabold tracking-widest hover:text-purple-300 transition"
+            className={`${
+              isActive("/help") ? "font-bold" : "font-medium"
+            } text-white text-2xl tracking-widest hover:text-purple-300 transition`}
             onClick={() => {
-              console.log("Support clicked");
+              router.push("/help");
               setIsOpen(false);
             }}
           >

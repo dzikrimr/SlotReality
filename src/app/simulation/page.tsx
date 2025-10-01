@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import EndingPage from "../endings/page";
+import Navbar from "@/components/Navbar";
 
 const ICONS = [
   "/icons/simulation/apple.png",
@@ -378,7 +379,7 @@ export default function Simulation() {
       `}</style>
 
       {winMessage && (
-        <div className="fixed top-0 left-0 right-0 z-50 flex justify-center pt-4">
+        <div className="fixed top-30 left-0 right-0 z-50 flex justify-center pt-4">
           <div
             className={`px-6 py-3 rounded-lg font-bold text-lg shadow-lg ${
               glowType === "win"

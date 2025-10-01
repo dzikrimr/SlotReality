@@ -18,6 +18,7 @@ const HelpPage: React.FC = () => {
 
       <div className="relative z-10 flex items-center justify-center min-h-screen px-4 py-12">
         <div className="flex flex-col md:flex-row gap-6 max-w-xl w-full items-stretch">
+          {/* Hotline */}
           <div className="flex-1 flex">
             <div className="relative bg-[#B1BAE0]/50 backdrop-blur-sm rounded-2xl hover:scale-105 transition-transform cursor-pointer w-full">
               <div className="absolute top-1/2 left-0 w-full -translate-y-1/2 h-34 flex items-center justify-center overflow-hidden rounded-t-2xl">
@@ -39,13 +40,19 @@ const HelpPage: React.FC = () => {
                   Bantuan?
                 </h2>
 
-                <button className="w-full bg-[#1a2340] text-white text-sm font-bold px-2 py-3 rounded-xl shadow-xl hover:bg-[#0d1527] transition-all hover:shadow-2xl border-2 border-[#2a3558] mt-4">
+                <a
+                  href="https://wa.me/+6281110015080"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full bg-[#1a2340] text-white text-sm font-bold px-2 py-3 rounded-xl shadow-xl hover:bg-[#0d1527] transition-all hover:shadow-2xl border-2 border-[#2a3558] mt-4 text-center block"
+                >
                   HOTLINE STOPJUDOL
-                </button>
+                </a>
               </div>
             </div>
           </div>
 
+          {/* Regulasi */}
           <div className="flex-1 flex">
             <div className="relative bg-[#B1BAE0]/50 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-between text-center hover:scale-105 transition-transform cursor-pointer p-4 w-full">
               <h2
@@ -65,9 +72,15 @@ const HelpPage: React.FC = () => {
                   className="object-contain"
                 />
               </div>
-              <button className="w-full bg-[#1a2340] text-white text-sm font-bold px-2 py-3 rounded-xl shadow-xl hover:bg-[#0d1527] transition-all hover:shadow-2xl border-2 border-[#2a3558]">
+
+              <a
+                href="https://drive.google.com/file/d/1l_6zeNKlwMusIGL-RkeTevx9y9kcSwEh/view?usp=sharing"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-[#1a2340] text-white text-sm font-bold px-2 py-3 rounded-xl shadow-xl hover:bg-[#0d1527] transition-all hover:shadow-2xl border-2 border-[#2a3558] text-center block"
+              >
                 KEPPRES NO. 21/2024
-              </button>
+              </a>
             </div>
           </div>
         </div>

@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Navbar from "@/components/Navbar";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -57,6 +58,7 @@ export default function EndingPage({ type, onReturnChoice }: EndingPageProps) {
       ref={containerRef}
       className="min-h-screen flex flex-col items-center justify-center bg-gray-900 relative overflow-hidden"
     >
+      <Navbar /> 
       <section className="w-full max-w-4xl mx-auto text-center px-4">
         <div className="max-w-[600px] mx-auto mb-8">
           <h1 className="text-5xl font-bold mb-8">

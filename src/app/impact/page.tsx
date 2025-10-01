@@ -116,7 +116,7 @@ export default function Impact() {
   return (
     <div
       ref={sectionRef}
-      className="relative w-full h-screen overflow-hidden bg-[#0a0e1a]"
+      className="relative w-full h-screen overflow-hidden bg-[##0A0F1F]"
     >
       <div className="absolute bottom-0 left-0 w-full h-80 bg-gradient-to-t from-[#737373]/20 to-transparent backdrop-blur-[2px] z-1"></div>
 
