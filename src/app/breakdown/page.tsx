@@ -16,17 +16,27 @@ export default function Breakdown() {
             <div className="font-mono text-xs leading-relaxed">
               <div className="text-purple-400">public class <span className="text-blue-400">JudiOnline</span> {'{'}</div>
               <div className="ml-4 text-purple-400">public static void <span className="text-yellow-400">main</span>(String[] args) {'{'}</div>
-              <div className="ml-8 text-gray-400">// PROGRAM JUDI YANG SELALU MEMBUAT PEMAIN KALAH</div>
-              <div className="ml-8 mt-4 text-gray-400">// 1. TAMPILAN PALSU: Seolah-olah acak, tapi sebenarnya diatur</div>
+              <div className="ml-8 text-gray-400">
+                <span>// PROGRAM JUDI YANG SELALU MEMBUAT PEMAIN KALAH</span>
+              </div>
+              <div className="ml-8 mt-4 text-gray-400">
+                <span>// 1. TAMPILAN PALSU: Seolah-olah acak, tapi sebenarnya diatur</span>
+              </div>
               <div className="ml-8 text-blue-300">double hasilAcak = Math.random(); <span className="text-gray-400">// Menghasilkan angka 0-1</span></div>
-              <div className="ml-8 mt-4 text-gray-400">// 2. MANIPULASI: Pemain hanya menang jika hasil &lt; 0.05 (hanya 5% peluang)</div>
+              <div className="ml-8 mt-4 text-gray-400">
+                <span>// 2. MANIPULASI: Pemain hanya menang jika hasil &lt; 0.05 (hanya 5% peluang)</span>
+              </div>
               <div className="ml-8 text-purple-400">if <span className="text-yellow-300">(hasilAcak &lt; 0.05)</span> {'{'}</div>
               <div className="ml-12 text-blue-300">System.out.println(<span className="text-green-400">'SELAMAT! ANDA MENANG!'</span>);</div>
               <div className="ml-8 text-purple-400">{'}'} else {'{'}</div>
-              <div className="ml-12 text-gray-400">// 3. PEMAIN SELALU KALAH: 95% kemungkinan kode ini dijalankan</div>
+              <div className="ml-12 text-gray-400">
+                <div>// 3. PEMAIN SELALU KALAH: 95% kemungkinan kode ini dijalankan</div>
+              </div>
               <div className="ml-12 text-blue-300">System.out.println(<span className="text-green-400">'ANDA KALAH! COBA LAGI!'</span>);</div>
               <div className="ml-8 text-purple-400">{'}'}</div>
-              <div className="ml-8 mt-4 text-gray-400">// 4. TRIK PSIKOLOGIS: Memancing pemain untuk terus mencoba</div>
+              <div className="ml-8 mt-4 text-gray-400">
+                <span>// 4. TRIK PSIKOLOGIS: Memancing pemain untuk terus mencoba</span>
+              </div>
               <div className="ml-8 text-blue-300">System.out.println(<span className="text-green-400">'Sedikit lagi menang! Coba lagi!'</span>);</div>
               <div className="ml-4 text-purple-400">{'}'}</div>
               <div className="text-purple-400">{'}'}</div>

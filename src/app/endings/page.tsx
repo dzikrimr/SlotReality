@@ -27,7 +27,7 @@ export default function EndingPage({ type, onReturnChoice }: EndingPageProps) {
       duration: 0.8,
       ease: "power2.inOut",
       onComplete: () => {
-        router.push("/maps-breakdown");
+        router.push("/maps-aio");
       },
     });
   };

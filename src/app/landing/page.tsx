@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React from "react";
 
@@ -7,6 +7,7 @@ import Image from "next/image";
 import Simulation from "../simulation/page";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Navbar from "@/components/Navbar";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -603,7 +604,7 @@ const Landing = () => {
           }}
         >
           <Image
-            src="/images/unmasked_man.png"
+            src="/images/unmaskedman.png"
             alt="Unmasked Man"
             width={600}
             height={700}
@@ -613,7 +614,7 @@ const Landing = () => {
               objectFit: "contain",
             }}
             onError={() => {
-              console.error("Failed to load unmasked_man.png");
+              console.error("Failed to load unmaskedman.png");
             }}
             onLoad={() => {
               console.log("Unmasked man image loaded successfully");
