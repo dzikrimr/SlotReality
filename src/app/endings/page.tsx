@@ -19,11 +19,11 @@ export default function EndingPage({ type, onReturnChoice }: EndingPageProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  // Fungsi animasi slide ke atas
+  // Slide out of page
   const goToMaps = () => {
     if (!containerRef.current) return;
     gsap.to(containerRef.current, {
-      y: "-100%", // slide keluar ke atas
+      y: "-100%", 
       duration: 0.8,
       ease: "power2.inOut",
       onComplete: () => {

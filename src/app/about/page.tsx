@@ -41,7 +41,6 @@ export default function About() {
         if (currentStep !== stepRef.current && textRef.current && mounted) {
           stepRef.current = currentStep;
 
-          // Hentikan animasi lama
           gsap.killTweensOf(textRef.current);
 
           gsap.to(textRef.current, {
