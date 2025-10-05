@@ -74,6 +74,9 @@ The map was built using a combination of data visualization libraries (e.g., Lea
 ## Team 🧑‍💻👩‍💻
 
 **Team PECEL SUKUN** (Universitas Brawijaya)
+
+The project was developed using **Next.js**, hosted on **Vercel**, with animations powered by **GSAP**, **Framer Motion**, and **AOS**.
+
 - [dzikrimr](https://github.com/dzikrimr): Developer
 - [adenugii](https://github.com/adenugii): Developer
 - [camilacahya56](https://github.com/CamilaCahya56): Product Manager
