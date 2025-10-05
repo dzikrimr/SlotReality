@@ -71,7 +71,7 @@ The map was built using a combination of data visualization libraries (e.g., Lea
 
 ---
 
-## Developer Team 🧑‍💻👩‍💻
+## Team 🧑‍💻👩‍💻
 
 **Team PECEL SUKUN** (Universitas Brawijaya)
 - [dzikrimr](https://github.com/dzikrimr): Developer
