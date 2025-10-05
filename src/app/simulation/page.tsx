@@ -23,9 +23,7 @@ const SPECIAL_ICONS = {
 function checkWinPattern(grid: string[][]) {
   const rows = 3;
   const cols = 5;
-  let hasWin = false;
-  let winType = "";
-  let bonusCount = 0;
+  const bonusCount = 0;
 
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
