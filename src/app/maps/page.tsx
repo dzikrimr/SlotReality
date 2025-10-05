@@ -14,6 +14,14 @@ export default function IndonesiaMap() {
   const [isClosing, setIsClosing] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [animatedPercentage, setAnimatedPercentage] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const islandData: { [key: string]: number } = {
     sumatra: 87,
@@ -99,12 +107,10 @@ export default function IndonesiaMap() {
     setMousePosition({ x: e.clientX, y: e.clientY });
   };
 
-  const smoothScrollTo = (target: string) => {
-    gsap.to(window, {
-      duration: 1.5,
-      scrollTo: target,
-      ease: "power2.inOut",
-    });
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length > 0) {
+      setMousePosition({ x: e.touches[0].clientX, y: e.touches[0].clientY });
+    }
   };
 
   useEffect(() => {
@@ -140,226 +146,260 @@ export default function IndonesiaMap() {
 
   return (
     <>
-  <style>{`
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    @keyframes slideDown {
-      from { opacity: 1; transform: translateY(0); }
-      to { opacity: 0; transform: translateY(10px); }
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    @keyframes fadeOut {
-      from { opacity: 1; }
-      to { opacity: 0; }
-    }
-  `}</style>
+      <style>{`
+        @keyframes slideUp {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes slideDown {
+          from { opacity: 1; transform: translateY(0); }
+          to { opacity: 0; transform: translateY(10px); }
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        
+        @keyframes fadeOut {
+          from { opacity: 1; }
+          to { opacity: 0; }
+        }
 
-  <div
-    className="relative min-h-screen bg-[#0A0F1F] flex items-center justify-center p-8"
-    onMouseMove={handleMouseMove}
-  >
-    <div className="absolute bottom-0 left-0 w-full h-80 bg-[#0A0F1F]"></div>
-    <div className="w-full max-w-7xl">
-      <div className="flex flex-col lg:flex-row items-start justify-between gap-8 h-full">
-        <div className="text-white lg:w-1/4 relative h-[36rem] flex flex-col justify-end">
-          <div className="flex items-center gap-3">
-            <button
-              onClick={handleToggle}
-              className="w-10 h-10 rounded-md flex items-center justify-center hover:opacity-80 cursor-pointer bg-[#D9D9D9]"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className={`w-6 h-6 transition-transform ${
-                  openLegend ? "rotate-180" : "rotate-0"
-                }`}
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="#1D1B20"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </button>
+        .map-scroll-container::-webkit-scrollbar {
+          height: 8px;
+        }
+        
+        .map-scroll-container::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.1);
+          border-radius: 4px;
+        }
+        
+        .map-scroll-container::-webkit-scrollbar-thumb {
+          background: #B9D86D;
+          border-radius: 4px;
+        }
+        
+        .map-scroll-container::-webkit-scrollbar-thumb:hover {
+          background: #a8c55c;
+        }
+      `}</style>
 
-            <div className="bg-[#D9D9D9] opacity-80 backdrop-blur shadow text-lg text-[#0A0F1F] flex items-center justify-center h-10 rounded-md px-4">
-              Source from Google Trend
+      <div
+        className="relative min-h-screen bg-[#0A0F1F] flex items-center justify-center p-4 sm:p-6 lg:p-8"
+        onMouseMove={handleMouseMove}
+        onTouchMove={handleTouchMove}
+      >
+        <div className="w-full max-w-7xl">
+          <div className="flex flex-col lg:flex-row items-start justify-between gap-6 lg:gap-8">
+            
+            <div className="lg:hidden w-full text-center mb-4">
+              <h1 className="text-2xl sm:text-3xl text-white leading-tight">
+                A Closer Look at
+                <br />
+                Online Gambling in Indonesia
+              </h1>
             </div>
-          </div>
 
-          {(openLegend || isClosing) && (
-            <div
-              className="absolute bottom-14 flex items-start gap-2"
-              style={{
-                animation: isClosing
-                  ? "slideDown 0.3s ease-out"
-                  : "slideUp 0.3s ease-out",
-              }}
-            >
-              <div className="flex flex-col items-center rounded bg-[rgba(217,217,217,0.12)] w-10 p-2 gap-2">
-                {legendData.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="w-6 h-6 rounded"
-                    style={{
-                      backgroundColor: item.color,
-                      animation: isClosing
-                        ? `fadeOut 0.2s ease-out ${
-                            (legendData.length - idx - 1) * 0.03
-                          }s both`
-                        : `fadeIn 0.3s ease-out ${idx * 0.05}s both`,
-                    }}
-                  />
-                ))}
-              </div>
-
-              <div className="flex flex-col py-2 gap-2">
-                {legendData.map((item, idx) => (
-                  <div
-                    key={idx}
-                    className="flex items-center h-6"
-                    style={{
-                      animation: isClosing
-                        ? `fadeOut 0.2s ease-out ${
-                            (legendData.length - idx - 1) * 0.03
-                          }s both`
-                        : `fadeIn 0.3s ease-out ${idx * 0.05}s both`,
-                    }}
+            <div className="text-white w-full lg:w-1/4 relative lg:h-[36rem] flex flex-col justify-end order-3 lg:order-1">
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handleToggle}
+                  className="w-10 h-10 rounded-md flex items-center justify-center hover:opacity-80 cursor-pointer bg-[#D9D9D9]"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className={`w-6 h-6 transition-transform ${
+                      openLegend ? "rotate-180" : "rotate-0"
+                    }`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="#1D1B20"
                   >
-                    <span className="text-sm">{item.label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M19 9l-7 7-7-7"
+                    />
+                  </svg>
+                </button>
 
-        <div className="flex-1 relative">
-          <svg
-            viewBox="1000 0 4000 2000"
-            preserveAspectRatio="xMidYMid meet"
-            className="w-full h-auto max-h-[600px]"
-            overflow="visible"
-          >
-            {islands.map((island, index) => {
-              const transforms = [
-                "translate(-1200, 800) scale(5.5)",
-                "translate(700, 2700) scale(5.5)",
-                "translate(1200, 600) scale(6)",
-                "translate(3300, 1100) scale(5.5)",
-                "translate(2400, 3000) scale(5.5)",
-                "translate(2650, 2980) scale(6)",
-                "translate(3300, 2900) scale(6)",
-                "translate(4300, 900) scale(5)",
-                "translate(5200, 1200) scale(6)",
-              ];
-
-              return (
-                <g key={island.id} transform={transforms[index]}>
-                  <path
-                    d={island.path}
-                    fill={
-                      hoveredIsland === island.id
-                        ? getIslandColor(island.id)
-                        : "#222C4D"
-                    }
-                    stroke="#B9D86D"
-                    strokeWidth="2"
-                    className="transition-all duration-300 cursor-pointer"
-                    onMouseEnter={() => setHoveredIsland(island.id)}
-                    onMouseLeave={() => setHoveredIsland(null)}
-                    style={{
-                      filter:
-                        hoveredIsland === island.id
-                          ? "brightness(1.05) drop-shadow(0 0 10px rgba(34,211,238,0.3))"
-                          : "none",
-                    }}
-                  >
-                    <title>{island.name}</title>
-                  </path>
-                </g>
-              );
-            })}
-          </svg>
-
-          {hoveredIsland && (
-            <div
-              className="fixed pointer-events-none z-50"
-              style={{
-                left: `${mousePosition.x + 20}px`,
-                top: `${mousePosition.y - 20}px`,
-                transform: "translate(0, -100%)",
-              }}
-            >
-              <div className="bg-transparent rounded-lg flex flex-col items-center gap-2 p-[15px_20px] min-w-[100px] border border-[#DFE3F2]">
-                <p className="text-white font-bold text-lg text-center">
-                  {islands.find((i) => i.id === hoveredIsland)?.name}
-                </p>
-
-                <div className="flex flex-col items-center gap-3">
-                  <div className="relative w-20 h-20">
-                    <svg className="w-20 h-20 transform -rotate-90">
-                      <circle
-                        cx="40"
-                        cy="40"
-                        r="36"
-                        stroke="#e5e7eb"
-                        strokeWidth="5"
-                        fill="none"
-                      />
-                      <circle
-                        cx="40"
-                        cy="40"
-                        r="36"
-                        stroke="#F44336"
-                        strokeWidth="5"
-                        fill="none"
-                        strokeDasharray={`${2 * Math.PI * 36}`}
-                        strokeDashoffset={`${
-                          2 * Math.PI * 36 * (1 - animatedPercentage / 100)
-                        }`}
-                        className="transition-all duration-300"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="text-white font-bold text-lg">
-                        {animatedPercentage}%
-                      </span>
-                    </div>
-                  </div>
-
-                  <p className="text-white text-sm text-center leading-tight">
-                    Pemain Judi Online
-                  </p>
+                <div className="bg-[#D9D9D9] opacity-80 backdrop-blur shadow text-sm sm:text-base lg:text-lg text-[#0A0F1F] flex items-center justify-center h-10 rounded-md px-3 sm:px-4">
+                  Source from Google Trend
                 </div>
               </div>
+
+              {(openLegend || isClosing) && (
+                <div
+                  className="absolute flex items-start gap-2 z-10"
+                  style={{
+                    animation: isClosing
+                      ? "slideDown 0.3s ease-out"
+                      : "slideUp 0.3s ease-out",
+                    bottom: isMobile ? '60px' : '3.5rem',
+                  }}
+                >
+                  <div className="flex flex-col items-center rounded bg-[rgba(217,217,217,0.12)] w-10 p-2 gap-2">
+                    {legendData.map((item, idx) => (
+                      <div
+                        key={idx}
+                        className="w-6 h-6 rounded"
+                        style={{
+                          backgroundColor: item.color,
+                          animation: isClosing
+                            ? `fadeOut 0.2s ease-out ${
+                                (legendData.length - idx - 1) * 0.03
+                              }s both`
+                            : `fadeIn 0.3s ease-out ${idx * 0.05}s both`,
+                        }}
+                      />
+                    ))}
+                  </div>
+
+                  <div className="flex flex-col py-2 gap-2">
+                    {legendData.map((item, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-center h-6"
+                        style={{
+                          animation: isClosing
+                            ? `fadeOut 0.2s ease-out ${
+                                (legendData.length - idx - 1) * 0.03
+                              }s both`
+                            : `fadeIn 0.3s ease-out ${idx * 0.05}s both`,
+                        }}
+                      >
+                        <span className="text-sm">{item.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-          )}
+
+            <div className="flex-1 relative w-full order-2">
+              <div className={`${isMobile ? 'overflow-x-auto overflow-y-visible map-scroll-container pb-4' : ''} w-full`}>
+                <svg
+                  viewBox={isMobile ? "2000 400 2000 3400" : "1000 0 4000 2000"}
+                  preserveAspectRatio="xMidYMid meet"
+                  className={`${isMobile ? 'w-[1000px]' : 'w-full'} h-auto`}
+                  style={{ 
+                    maxHeight: isMobile ? '400px' : '600px',
+                    minHeight: isMobile ? '400px' : 'auto'
+                  }}
+                  overflow="visible"
+                >
+                  {islands.map((island, index) => {
+                    const transforms = [
+                      "translate(-1200, 800) scale(5.5)",
+                      "translate(700, 2700) scale(5.5)",
+                      "translate(1200, 600) scale(6)",
+                      "translate(3300, 1100) scale(5.5)",
+                      "translate(2400, 3000) scale(5.5)",
+                      "translate(2650, 2980) scale(6)",
+                      "translate(3300, 2900) scale(6)",
+                      "translate(4300, 900) scale(5)",
+                      "translate(5200, 1200) scale(6)",
+                    ];
+
+                    return (
+                      <g key={island.id} transform={transforms[index]}>
+                        <path
+                          d={island.path}
+                          fill={
+                            hoveredIsland === island.id
+                              ? getIslandColor(island.id)
+                              : "#222C4D"
+                          }
+                          stroke="#B9D86D"
+                          strokeWidth="2"
+                          className="transition-all duration-300 cursor-pointer"
+                          onMouseEnter={() => !isMobile && setHoveredIsland(island.id)}
+                          onMouseLeave={() => !isMobile && setHoveredIsland(null)}
+                          onTouchStart={() => setHoveredIsland(island.id)}
+                          onTouchEnd={() => setTimeout(() => setHoveredIsland(null), 2000)}
+                          style={{
+                            filter:
+                              hoveredIsland === island.id
+                                ? "brightness(1.05) drop-shadow(0 0 10px rgba(34,211,238,0.3))"
+                                : "none",
+                          }}
+                        >
+                          <title>{island.name}</title>
+                        </path>
+                      </g>
+                    );
+                  })}
+                </svg>
+              </div>
+              {hoveredIsland && (
+                <div
+                  className="fixed pointer-events-none z-50"
+                  style={{
+                    left: isMobile ? '50%' : `${mousePosition.x + 20}px`,
+                    top: isMobile ? '50%' : `${mousePosition.y - 20}px`,
+                    transform: isMobile ? 'translate(-50%, -50%)' : 'translate(0, -100%)',
+                  }}
+                >
+                  <div className="bg-[rgba(10,15,31,0.95)] rounded-lg flex flex-col items-center gap-2 p-[15px_20px] min-w-[100px] border border-[#DFE3F2] backdrop-blur-sm">
+                    <p className="text-white font-bold text-base sm:text-lg text-center">
+                      {islands.find((i) => i.id === hoveredIsland)?.name}
+                    </p>
+
+                    <div className="flex flex-col items-center gap-3">
+                      <div className="relative w-16 h-16 sm:w-20 sm:h-20">
+                        <svg className="w-16 h-16 sm:w-20 sm:h-20 transform -rotate-90">
+                          <circle
+                            cx={isMobile ? "32" : "40"}
+                            cy={isMobile ? "32" : "40"}
+                            r={isMobile ? "28" : "36"}
+                            stroke="#e5e7eb"
+                            strokeWidth="5"
+                            fill="none"
+                          />
+                          <circle
+                            cx={isMobile ? "32" : "40"}
+                            cy={isMobile ? "32" : "40"}
+                            r={isMobile ? "28" : "36"}
+                            stroke="#F44336"
+                            strokeWidth="5"
+                            fill="none"
+                            strokeDasharray={`${2 * Math.PI * (isMobile ? 28 : 36)}`}
+                            strokeDashoffset={`${
+                              2 * Math.PI * (isMobile ? 28 : 36) * (1 - animatedPercentage / 100)
+                            }`}
+                            className="transition-all duration-300"
+                            strokeLinecap="round"
+                          />
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-white font-bold text-base sm:text-lg">
+                            {animatedPercentage}%
+                          </span>
+                        </div>
+                      </div>
+
+                      <p className="text-white text-xs sm:text-sm text-center leading-tight">
+                        Pemain Judi Online
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+            <div className="hidden lg:block lg:w-1/4 text-right relative order-1 lg:order-3">
+              <h1 className="absolute top-4 text-3xl xl:text-4xl text-white text-right leading-tight">
+                A Closer Look at
+                <br />
+                Online Gambling in Indonesia
+              </h1>
+            </div>
+
+          </div>
         </div>
-
-      <div className="lg:w-1/4 text-right relative">
-        <h1 className="absolute top-4 text-4xl text-right">
-          A Closer Look at
-          <br />
-          Online Gambling in Indonesia
-        </h1>
       </div>
-
-      </div>
-    </div>
-  </div>
-</>
+    </>
   );
 }
