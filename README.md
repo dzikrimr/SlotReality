@@ -74,9 +74,9 @@ The map was built using a combination of data visualization libraries (e.g., Lea
 ## Developer Team 🧑‍💻👩‍💻
 
 **Team PECEL SUKUN** (Universitas Brawijaya)
-- [dzikrimr](https://github.com/dzikrimr): Developer & Project Lead
-- [adenugii](): Developer
-- [camilacahya56](): Product Manager
+- [dzikrimr](https://github.com/dzikrimr): Developer
+- [adenugii](https://github.com/adenugii): Developer
+- [camilacahya56](https://github.com/CamilaCahya56): Product Manager
 
 ---
 
