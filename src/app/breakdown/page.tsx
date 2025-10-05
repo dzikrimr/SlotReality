@@ -17,7 +17,7 @@ export default function Breakdown() {
       setIsExiting(true);
       setTimeout(() => {
         router.push("/help");
-      }, 500); 
+      }, 500);
     }
   };
 
@@ -47,7 +47,8 @@ export default function Breakdown() {
                   transition={{ duration: 0.5 }}
                 >
                   <h1 className="text-left font-medium leading-tight mb-4 md:mb-6 mt-10 text-[2rem] md:text-[clamp(2.5rem,5vw,2rem)]">
-                    Behind the Screen:<br />
+                    Behind the Screen:
+                    <br />
                     How Online Gambling Works
                   </h1>
 
@@ -55,38 +56,71 @@ export default function Breakdown() {
                     <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 shadow-xl p-6">
                       <div className="font-mono text-xs leading-relaxed">
                         <div className="text-purple-400">
-                          public class <span className="text-blue-400">JudiOnline</span> {"{"}
+                          public class{" "}
+                          <span className="text-blue-400">JudiOnline</span>{" "}
+                          {"{"}
                         </div>
                         <div className="ml-4 text-purple-400">
-                          public static void <span className="text-yellow-400">main</span>(String[] args) {"{"}
+                          public static void{" "}
+                          <span className="text-yellow-400">main</span>(String[]
+                          args) {"{"}
                         </div>
-                        <div className="ml-8 text-gray-400">PROGRAM JUDI YANG SELALU MEMBUAT PEMAIN KALAH</div>
+                        <div className="ml-8 text-gray-400">
+                          PROGRAM JUDI YANG SELALU MEMBUAT PEMAIN KALAH
+                        </div>
                         <div className="ml-8 mt-4 text-gray-400">
-                          1. TAMPILAN PALSU: Seolah-olah acak, tapi sebenarnya diatur
+                          1. TAMPILAN PALSU: Seolah-olah acak, tapi sebenarnya
+                          diatur
                         </div>
                         <div className="ml-8 text-blue-300">
-                          double hasilAcak = Math.random(); <span className="text-gray-400">Menghasilkan angka 0-1</span>
+                          double hasilAcak = Math.random();{" "}
+                          <span className="text-gray-400">
+                            Menghasilkan angka 0-1
+                          </span>
                         </div>
                         <div className="ml-8 mt-4 text-gray-400">
-                          2. MANIPULASI: Pemain hanya menang jika hasil &lt; 0.05 (5% peluang)
+                          2. MANIPULASI: Pemain hanya menang jika hasil &lt;
+                          0.05 (5% peluang)
                         </div>
                         <div className="ml-8 text-purple-400">
-                          if <span className="text-yellow-300">(hasilAcak &lt; 0.05)</span> {"{"}
+                          if{" "}
+                          <span className="text-yellow-300">
+                            (hasilAcak &lt; 0.05)
+                          </span>{" "}
+                          {"{"}
                         </div>
                         <div className="ml-12 text-blue-300">
-                          System.out.println(<span className="text-green-400">SELAMAT! ANDA MENANG!</span>);
+                          System.out.println(
+                          <span className="text-green-400">
+                            SELAMAT! ANDA MENANG!
+                          </span>
+                          );
                         </div>
-                        <div className="ml-8 text-purple-400">{"}"} else {"{"}</div>
+                        <div className="ml-8 text-purple-400">
+                          {"}"} else {"{"}
+                        </div>
                         <div className="ml-12 text-gray-400">
-                          3. PEMAIN SELALU KALAH: 95% kemungkinan kode ini dijalankan
+                          3. PEMAIN SELALU KALAH: 95% kemungkinan kode ini
+                          dijalankan
                         </div>
                         <div className="ml-12 text-blue-300">
-                          System.out.println(<span className="text-green-400">ANDA KALAH! COBA LAGI!</span>);
+                          System.out.println(
+                          <span className="text-green-400">
+                            ANDA KALAH! COBA LAGI!
+                          </span>
+                          );
                         </div>
                         <div className="ml-8 text-purple-400">{"}"}</div>
-                        <div className="ml-8 mt-4 text-gray-400">4. TRIK PSIKOLOGIS: Memancing pemain untuk terus mencoba</div>
+                        <div className="ml-8 mt-4 text-gray-400">
+                          4. TRIK PSIKOLOGIS: Memancing pemain untuk terus
+                          mencoba
+                        </div>
                         <div className="ml-8 text-blue-300">
-                          System.out.println(<span className="text-green-400">Sedikit lagi menang! Coba lagi!</span>);
+                          System.out.println(
+                          <span className="text-green-400">
+                            Sedikit lagi menang! Coba lagi!
+                          </span>
+                          );
                         </div>
                         <div className="ml-4 text-purple-400">{"}"}</div>
                         <div className="text-purple-400">{"}"}</div>
@@ -94,32 +128,25 @@ export default function Breakdown() {
                     </div>
 
                     <div className="bg-gradient-to-br from-slate-700/50 to-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-600/50 shadow-xl flex items-center justify-center p-2">
-                      <video
-                        src="/videos/judi.mp4"
-                        autoPlay
-                        muted
-                        playsInline
-                        loop
-                        controls
-                        controlsList="nodownload noremoteplayback noplaybackrate nofullscreen"
-                        disablePictureInPicture
+                      <iframe
+                        width="100%"
+                        height="100%"
+                        src="https://www.youtube.com/embed/0SZ8awelVH4?autoplay=1&mute=0&loop=1&playlist=0SZ8awelVH4&modestbranding=1&controls=1&cc_load_policy=1&cc_lang_pref=id"
+                        title="Video Judi Online"
+                        frameBorder="0"
+                        allow="autoplay; encrypted-media"
+                        allowFullScreen
                         className="rounded-xl w-full h-full object-contain"
-                      >
-                        <track
-                          src="/subs/sample.vtt"
-                          kind="subtitles"
-                          srcLang="id"
-                          label="Bahasa Indonesia"
-                          default
-                        />
-                      </video>
+                      ></iframe>
                     </div>
                   </div>
 
                   <div className="bg-red-900/20 border border-red-500/30 rounded-xl backdrop-blur-sm text-center mt-6 p-2">
                     <p className="text-slate-200 leading-relaxed italic">
-                      Ini memperlihatkan bahwa peluang kemenangan tidak benar-benar acak. Operator bisa menentukan persentasenya,
-                      misalnya hanya 10% dari setiap putaran yang berpeluang menang. Artinya, sebagian besar pemain akan tetap kalah
+                      Ini memperlihatkan bahwa peluang kemenangan tidak
+                      benar-benar acak. Operator bisa menentukan persentasenya,
+                      misalnya hanya 10% dari setiap putaran yang berpeluang
+                      menang. Artinya, sebagian besar pemain akan tetap kalah
                       meskipun merasa sedang bermain fair.
                     </p>
                   </div>
@@ -145,8 +172,18 @@ export default function Breakdown() {
             onClick={handleArrowClick}
             className="fixed right-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors z-20 cursor-pointer"
           >
-            <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            <svg
+              className="w-12 h-12"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
             </svg>
           </button>
         </motion.div>
