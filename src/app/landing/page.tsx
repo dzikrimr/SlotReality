@@ -1,16 +1,15 @@
 "use client";
 
 import React from "react";
-
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Simulation from "../simulation/page";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Navbar from "@/components/Navbar";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 }
 
 interface FallingElement {
@@ -50,11 +49,9 @@ const Landing = () => {
   const arrowRef = useRef<HTMLDivElement>(null);
   const scifiLineRef = useRef<HTMLDivElement>(null);
 
-  // Generate random positions after component mounts to avoid hydration mismatch
   useEffect(() => {
     setIsMounted(true);
 
-    // Generate falling elements
     const elements: FallingElement[] = [];
     const elementTypes: ("card_10" | "gaple" | "slot" | "card_j")[] = [
       "card_10",
@@ -77,7 +74,6 @@ const Landing = () => {
     }
     setFallingElements(elements);
 
-    // Generate coin positions with random rotation
     const coins = [];
     for (let i = 0; i < 50; i++) {
       coins.push({
@@ -90,7 +86,6 @@ const Landing = () => {
     }
     setCoinPositions(coins);
 
-    // Generate ambient positions
     const ambient = [];
     for (let i = 0; i < 15; i++) {
       ambient.push({
@@ -103,42 +98,35 @@ const Landing = () => {
     setAmbientPositions(ambient);
   }, []);
 
-  // Enhanced GSAP Smooth Scroll Setup with Phone Zoom Effect
   useEffect(() => {
     if (!isMounted || !unmaskedManRef.current) return;
 
-    // Set initial position for unmasked man (completely off-screen right)
     gsap.set(unmaskedManRef.current, {
       x: "120vw",
       y: "60vh",
       scale: 1.6,
     });
 
-    // Set initial states for fade elements
     gsap.set(fadeOverlayRef.current, {
       opacity: 0,
     });
 
-    // Set initial state for sci-fi line
     gsap.set(scifiLineRef.current, {
       opacity: 0,
       scale: 1,
     });
 
-    // Create enhanced smooth scroll animation for unmasked man with phone zoom
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: scrollContainerRef.current,
         start: "top top",
-        end: "+=500%", // Extended range for multi-stage animation
+        end: "+=500%", 
         scrub: 1,
         markers: false,
         onUpdate: (self) => {
           console.log("ScrollTrigger progress:", self.progress);
 
-          // Dynamic state management based on scroll direction
           if (self.progress >= 0.85 && self.direction === 1) {
-            // Scrolling down - show next page
             if (!isTransitioning) {
               setIsTransitioning(true);
             }
@@ -146,7 +134,6 @@ const Landing = () => {
               setShowNextPage(true);
             }
           } else if (self.progress < 0.85 && self.direction === -1) {
-            // Scrolling up - hide next page
             if (showNextPage) {
               setShowNextPage(false);
             }
@@ -158,7 +145,7 @@ const Landing = () => {
       },
     });
 
-    // Stage 1: Animate unmasked man from right to center (0% - 40% of scroll)
+    // Stage 1: Animate unmasked man from right to center
     tl.to(unmaskedManRef.current, {
       x: "50vw",
       y: "100vh",
@@ -169,7 +156,7 @@ const Landing = () => {
       duration: 0.4,
     })
 
-      // Stage 2: Hold position briefly (40% - 50% of scroll)
+      // Stage 2: Hold position
       .to(unmaskedManRef.current, {
         x: "50vw",
         y: "100vh",
@@ -192,13 +179,13 @@ const Landing = () => {
         "-=0.1"
       )
 
-      // Stage 3: Zoom and shift effect - scale up while moving right for phone focus (50% - 80% of scroll)
+      // Stage 3: Zoom and shift effect 
       .to(unmaskedManRef.current, {
-        x: "1020vw", // Move further right to focus on phone area
-        y: "1300vh", // Slight vertical adjustment for phone position
-        xPercent: -30, // Adjust anchor point for better phone focus
+        x: "1020vw",
+        y: "1300vh",
+        xPercent: -30, 
         yPercent: -40,
-        scale: 60, // Scale up significantly for zoom effect
+        scale: 60,
         ease: "power2.inOut",
         duration: 0.3,
         onStart: () => {
@@ -206,7 +193,6 @@ const Landing = () => {
         },
       })
 
-      // Hide sci-fi line when zooming starts
       .to(
         scifiLineRef.current,
         {
@@ -218,27 +204,23 @@ const Landing = () => {
         "-=0.3"
       )
 
-      // Stage 4: Hold zoom position briefly (80% - 85% of scroll)
       .to(unmaskedManRef.current, {
         scale: 60,
         ease: "none",
         duration: 0.05,
       })
 
-      // Stage 5: Fade transition to next page (85% - 100% of scroll)
       .to(fadeOverlayRef.current, {
         opacity: 1,
         ease: "power2.inOut",
         duration: 0.1,
         onReverseComplete: () => {
-          // When scrolling back up, hide next page
           setShowNextPage(false);
           setIsTransitioning(false);
           console.log("Reverse animation complete - back to landing");
         },
       });
 
-    // Animate floating cards with GSAP
     setTimeout(() => {
       const cards = document.querySelectorAll("[data-floating-card]");
       cards.forEach((card, index) => {
@@ -255,7 +237,6 @@ const Landing = () => {
       });
     }, 500);
 
-    // Animate coins with GSAP
     setTimeout(() => {
       const coins = document.querySelectorAll("[data-floating-coin]");
       coins.forEach((coin, index) => {
@@ -271,7 +252,6 @@ const Landing = () => {
       });
     }, 300);
 
-    // Animate ambient particles
     setTimeout(() => {
       const particles = document.querySelectorAll("[data-ambient-particle]");
       particles.forEach((particle, index) => {
@@ -288,7 +268,6 @@ const Landing = () => {
       });
     }, 200);
 
-    // Cleanup function
     return () => {
       ScrollTrigger.getAll().forEach((st) => st.kill());
     };
@@ -303,17 +282,13 @@ const Landing = () => {
       const maxScroll = document.body.scrollHeight - window.innerHeight;
       const progress = Math.min(scrollTop / maxScroll, 1);
 
-      // blur background
       backgroundRef.current.style.filter = `blur(${progress * 12}px)`;
 
-      // arrow fade in/out
       arrowRef.current.style.opacity = `${1 - Math.min(progress / 0.4, 1)}`;
     };
 
-    // Hitung efek setiap scroll
     window.addEventListener("scroll", updateEffects);
 
-    // Reset efek saat landing page muncul lagi
     if (!showNextPage) {
       updateEffects();
     }
@@ -323,16 +298,16 @@ const Landing = () => {
     };
   }, [isMounted, showNextPage]);
 
-  // Enhanced smooth scroll to section
-  const smoothScrollTo = (target: string) => {
+  const smoothScrollTo = () => {
+    const maxScroll = document.body.scrollHeight - window.innerHeight;
+    
     gsap.to(window, {
-      duration: 1.5,
-      scrollTo: target,
-      ease: "power2.inOut",
+      duration: 8,
+      scrollTo: maxScroll * 0.99,
+      ease: "power1.inOut",
     });
   };
 
-  // Next Page Component (Phone Screen Content)
   const NextPageContent = () => (
     <div className="w-full h-full">
       <Simulation />
@@ -344,10 +319,8 @@ const Landing = () => {
       className="min-h-screen bg-[#0A0F1F] relative"
       ref={scrollContainerRef}
     >
-      {/* Ensure page has scrollable height for multi-stage animation */}
       <div className="w-full" style={{ height: "600vh" }}></div>
 
-      {/* Enhanced CSS Animations with GSAP-friendly transforms */}
       <style jsx>
         {`
           @keyframes cardFloat {
@@ -464,7 +437,6 @@ const Landing = () => {
         `}
       </style>
 
-      {/* Semi-circle gradient overlay */}
       <div
         className="fixed top-0 left-0 w-full pointer-events-none"
         style={{
@@ -473,14 +445,12 @@ const Landing = () => {
         }}
       />
 
-      {/* Background + Floating Cards Container */}
       {isMounted && (
         <div
           ref={backgroundRef}
           className="fixed inset-0 z-10 pointer-events-none"
           style={{ filter: "blur(0px)" }}
         >
-          {/* Large Background Coin */}
           <Image
             src="/images/coin.png"
             alt=""
@@ -495,8 +465,6 @@ const Landing = () => {
             }}
             unoptimized
           />
-
-          {/* Floating Cards */}
           {fallingElements.map((element) => (
             <div
               key={element.id}
@@ -527,7 +495,6 @@ const Landing = () => {
         </div>
       )}
 
-      {/* Main Content */}
       <div
         className="fixed left-0 right-0 mx-auto z-30 pointer-events-none"
         style={{
@@ -572,7 +539,7 @@ const Landing = () => {
                   style={{
                     marginBottom: "0.5rem",
                   }}
-                  onClick={() => smoothScrollTo("50%")}
+                  onClick={() => smoothScrollTo()}
                 >
                   <Image
                     src="/images/ic_arrow_down.png"
@@ -586,7 +553,7 @@ const Landing = () => {
                     }
                   />
                 </div>
-                <p className="text-white/60 text-sm">Scroll to Discover...</p>
+                <p className="text-white/60 text-sm">Scroll or Click to Discover...</p>
               </>
             )}
           </div>
@@ -624,7 +591,6 @@ const Landing = () => {
         </div>
       )}
 
-      {/* Line Guide */}
       {isMounted && (
         <div
           ref={scifiLineRef}

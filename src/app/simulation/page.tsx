@@ -20,7 +20,6 @@ const SPECIAL_ICONS = {
   BIGWIN: "/icons/simulation/bigwin.png",
 };
 
-// Check pola kemenangan
 function checkWinPattern(grid: string[][]) {
   const rows = 3;
   const cols = 5;
@@ -28,18 +27,14 @@ function checkWinPattern(grid: string[][]) {
   let winType = "";
   let bonusCount = 0;
 
-  // Hitung bonus/scatter
   for (let r = 0; r < rows; r++) {
     for (let c = 0; c < cols; c++) {
       if (grid[r][c] === SPECIAL_ICONS.BONUS) bonusCount++;
     }
   }
 
-  if (bonusCount >= 3) {
-    return { hasWin: true, winType: "BONUS", payout: 5 };
-  }
+  if (bonusCount >= 3) return { hasWin: true, winType: "BONUS", payout: 5 };
 
-  // Check horizontal (setiap baris)
   for (let r = 0; r < rows; r++) {
     const firstIcon = grid[r][0];
     let count = 1;
@@ -47,37 +42,29 @@ function checkWinPattern(grid: string[][]) {
       if (grid[r][c] === firstIcon) count++;
       else break;
     }
-    if (count >= 3) {
-      hasWin = true;
-      winType = `Horizontal Row ${r + 1}`;
-      return { hasWin, winType, payout: count };
-    }
+    if (count >= 3)
+      return {
+        hasWin: true,
+        winType: `Horizontal Row ${r + 1}`,
+        payout: count,
+      };
   }
 
-  // Check diagonal kiri atas ke kanan bawah
   if (rows === 3 && cols >= 3) {
     const firstIcon = grid[0][0];
-    if (grid[1][1] === firstIcon && grid[2][2] === firstIcon) {
-      hasWin = true;
-      winType = "Diagonal";
-      return { hasWin, winType, payout: 3 };
-    }
+    if (grid[1][1] === firstIcon && grid[2][2] === firstIcon)
+      return { hasWin: true, winType: "Diagonal", payout: 3 };
   }
 
-  // Check diagonal kanan atas ke kiri bawah
   if (rows === 3 && cols >= 3) {
     const firstIcon = grid[0][2];
-    if (grid[1][1] === firstIcon && grid[2][0] === firstIcon) {
-      hasWin = true;
-      winType = "Diagonal ↙";
-      return { hasWin, winType, payout: 3 };
-    }
+    if (grid[1][1] === firstIcon && grid[2][0] === firstIcon)
+      return { hasWin: true, winType: "Diagonal", payout: 3 };
   }
 
   return { hasWin: false, winType: "", payout: 0 };
 }
 
-// Generate hasil spin berdasarkan spinNumber
 function generateSpinResult(spinNumber: number): string[][] {
   const rows = 3;
   const cols = 5;
@@ -85,88 +72,56 @@ function generateSpinResult(spinNumber: number): string[][] {
     .fill(0)
     .map(() => Array(cols).fill(""));
 
-  // Spin 1: kalah (acak)
-  if (spinNumber === 1) {
-    for (let r = 0; r < rows; r++) {
-      for (let c = 0; c < cols; c++) {
+  if (spinNumber === 1 || spinNumber >= 6) {
+    for (let r = 0; r < rows; r++)
+      for (let c = 0; c < cols; c++)
         result[r][c] = ICONS[Math.floor(Math.random() * ICONS.length)];
-      }
-    }
     return result;
   }
 
-  // Spin 2-5: menang dengan berbagai pola
-  if (spinNumber >= 2 && spinNumber <= 5) {
-    const patterns = ["horizontal", "diagonal_down", "diagonal_up", "bonus"];
-    const pattern = patterns[Math.floor(Math.random() * patterns.length)];
+  const patterns = ["horizontal", "diagonal_down", "diagonal_up", "bonus"];
+  const pattern = patterns[Math.floor(Math.random() * patterns.length)];
 
-    if (pattern === "horizontal") {
-      const winRow = Math.floor(Math.random() * rows);
-      const winIcon = ICONS[Math.floor(Math.random() * ICONS.length)];
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          if (r === winRow) {
-            result[r][c] = winIcon;
-          } else {
-            result[r][c] = ICONS[Math.floor(Math.random() * ICONS.length)];
-          }
-        }
-      }
-    } else if (pattern === "diagonal_down") {
-      const winIcon = ICONS[Math.floor(Math.random() * ICONS.length)];
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          if (r === c && c < 3) {
-            result[r][c] = winIcon;
-          } else {
-            result[r][c] = ICONS[Math.floor(Math.random() * ICONS.length)];
-          }
-        }
-      }
-    } else if (pattern === "diagonal_up") {
-      const winIcon = ICONS[Math.floor(Math.random() * ICONS.length)];
-      result[0][2] = winIcon;
-      result[1][1] = winIcon;
-      result[2][0] = winIcon;
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          if (result[r][c] === "") {
-            result[r][c] = ICONS[Math.floor(Math.random() * ICONS.length)];
-          }
-        }
-      }
-    } else if (pattern === "bonus") {
-      // 3-4 bonus icons di posisi acak
-      const bonusPositions: [number, number][] = [];
-      const bonusCount = 3 + Math.floor(Math.random() * 2);
-
-      while (bonusPositions.length < bonusCount) {
-        const r = Math.floor(Math.random() * rows);
-        const c = Math.floor(Math.random() * cols);
-        if (!bonusPositions.some(([pr, pc]) => pr === r && pc === c)) {
-          bonusPositions.push([r, c]);
-        }
-      }
-
-      for (let r = 0; r < rows; r++) {
-        for (let c = 0; c < cols; c++) {
-          if (bonusPositions.some(([pr, pc]) => pr === r && pc === c)) {
-            result[r][c] = SPECIAL_ICONS.BONUS;
-          } else {
-            result[r][c] = ICONS[Math.floor(Math.random() * ICONS.length)];
-          }
-        }
-      }
+  if (pattern === "horizontal") {
+    const winRow = Math.floor(Math.random() * rows);
+    const winIcon = ICONS[Math.floor(Math.random() * ICONS.length)];
+    for (let r = 0; r < rows; r++)
+      for (let c = 0; c < cols; c++)
+        result[r][c] =
+          r === winRow
+            ? winIcon
+            : ICONS[Math.floor(Math.random() * ICONS.length)];
+  } else if (pattern === "diagonal_down") {
+    const winIcon = ICONS[Math.floor(Math.random() * ICONS.length)];
+    for (let r = 0; r < rows; r++)
+      for (let c = 0; c < cols; c++)
+        result[r][c] =
+          r === c && c < 3
+            ? winIcon
+            : ICONS[Math.floor(Math.random() * ICONS.length)];
+  } else if (pattern === "diagonal_up") {
+    const winIcon = ICONS[Math.floor(Math.random() * ICONS.length)];
+    result[0][2] = winIcon;
+    result[1][1] = winIcon;
+    result[2][0] = winIcon;
+    for (let r = 0; r < rows; r++)
+      for (let c = 0; c < cols; c++)
+        if (result[r][c] === "")
+          result[r][c] = ICONS[Math.floor(Math.random() * ICONS.length)];
+  } else if (pattern === "bonus") {
+    const bonusPositions: [number, number][] = [];
+    const bonusCount = 3 + Math.floor(Math.random() * 2);
+    while (bonusPositions.length < bonusCount) {
+      const r = Math.floor(Math.random() * rows);
+      const c = Math.floor(Math.random() * cols);
+      if (!bonusPositions.some(([pr, pc]) => pr === r && pc === c))
+        bonusPositions.push([r, c]);
     }
-
-    return result;
-  }
-
-  // Spin 6+: kalah besar (acak)
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      result[r][c] = ICONS[Math.floor(Math.random() * ICONS.length)];
-    }
+    for (let r = 0; r < rows; r++)
+      for (let c = 0; c < cols; c++)
+        result[r][c] = bonusPositions.some(([pr, pc]) => pr === r && pc === c)
+          ? SPECIAL_ICONS.BONUS
+          : ICONS[Math.floor(Math.random() * ICONS.length)];
   }
 
   return result;
@@ -176,6 +131,7 @@ export default function Simulation() {
   const [currentPage, setCurrentPage] = useState<"game" | "ending">("game");
   const [isSpinning, setIsSpinning] = useState(false);
   const [showOverlay, setShowOverlay] = useState(false);
+  const [overlayVisible, setOverlayVisible] = useState(false);
   const [isAutoSpin, setIsAutoSpin] = useState(false);
 
   const [balance, setBalance] = useState(50);
@@ -196,6 +152,14 @@ export default function Simulation() {
 
   const [winMessage, setWinMessage] = useState("");
 
+  useEffect(() => {
+    if (showOverlay) {
+      setTimeout(() => setOverlayVisible(true), 10);
+    } else {
+      setOverlayVisible(false);
+    }
+  }, [showOverlay]);
+
   const performSpin = () => {
     if (isSpinning || balance < bet) {
       if (balance < bet) {
@@ -212,7 +176,6 @@ export default function Simulation() {
 
     const newSpinCount = spinCount + 1;
 
-    // Animasi spinning dengan interval
     let spinCounter = 0;
     const spinInterval = setInterval(() => {
       setDisplayGrid(
@@ -228,17 +191,12 @@ export default function Simulation() {
 
       if (spinCounter >= 15) {
         clearInterval(spinInterval);
-
-        // Generate hasil akhir
         const results = generateSpinResult(newSpinCount);
         setDisplayGrid(results);
-
-        // Check win
         const winCheck = checkWinPattern(results);
 
         let delta = 0;
         let isWin = false;
-
         if (winCheck.hasWin) {
           delta = bet * winCheck.payout;
           isWin = true;
@@ -251,7 +209,6 @@ export default function Simulation() {
         const newBalance = Math.max(balance + delta, 0);
         setBalance(newBalance);
         setSpinCount(newSpinCount);
-
         setGlowType(isWin ? "win" : "lose");
         setIsSpinning(false);
 
@@ -262,29 +219,17 @@ export default function Simulation() {
             setCurrentPage("ending");
           }, 2000);
         } else if (newSpinCount === 5 && newBalance > 50) {
-          setTimeout(() => {
-            setShowOverlay(true);
-            setIsAutoSpin(false);
-          }, 2000);
+          setTimeout(() => setShowOverlay(true), 2000);
         }
       }
     }, 100);
   };
 
-  const spin = () => {
-    performSpin();
-  };
-
-  const toggleAutoSpin = () => {
-    setIsAutoSpin(!isAutoSpin);
-  };
-
-  const setMaxBet = () => {
-    setBet(balance);
-  };
+  const spin = () => performSpin();
+  const toggleAutoSpin = () => setIsAutoSpin(!isAutoSpin);
+  const setMaxBet = () => setBet(balance);
 
   const handleReturnChoice = () => {
-    // Reset semua state
     setCurrentPage("game");
     setBalance(50);
     setBet(5);
@@ -292,6 +237,7 @@ export default function Simulation() {
     setEndingType(null);
     setGlowType("idle");
     setShowOverlay(false);
+    setOverlayVisible(false);
     setIsAutoSpin(false);
     setWinMessage("");
     setDisplayGrid(
@@ -310,12 +256,6 @@ export default function Simulation() {
     setCurrentPage("ending");
   };
 
-  const handleContinuePlaying = () => {
-    setShowOverlay(false);
-    setGlowType("idle");
-  };
-
-  // Auto spin effect
   useEffect(() => {
     if (
       isAutoSpin &&
@@ -324,38 +264,33 @@ export default function Simulation() {
       balance >= bet &&
       currentPage === "game"
     ) {
-      const timeout = setTimeout(() => {
-        performSpin();
-      }, 1500);
+      const timeout = setTimeout(() => performSpin(), 1500);
       return () => clearTimeout(timeout);
     }
   }, [isAutoSpin, isSpinning, showOverlay, balance, bet, currentPage]);
 
-  // Render halaman ending
-  if (currentPage === "ending" && endingType) {
+  if (currentPage === "ending" && endingType)
     return <EndingPage type={endingType} onReturnChoice={handleReturnChoice} />;
-  }
 
-  // Render halaman game
   return (
     <div className="relative w-full">
-        <Navbar />
+      <Navbar />
       <div className="min-h-screen flex items-center justify-center bg-gray-900">
         <section className="w-full max-w-3xl mx-auto mt-12 relative px-4">
-          {/* Balance & Bet */}
           <div className="flex items-center justify-between mb-4 px-2">
             <div className="text-sm font-semibold tracking-wider text-gray-300">
               BALANCE
             </div>
-            <div className="bg-gray-800/60 text-gray-100 px-4 py-2 rounded-md font-medium">
-              $ {balance.toFixed(2)}
+            <div className="bg-gray-800/60 text-gray-100 px-4 py-2 rounded-md font-medium w-32 text-center">
+              ${balance.toFixed(2)}
             </div>
           </div>
+
           <div className="flex items-center justify-between mb-4 px-2">
             <div className="text-sm font-semibold tracking-wider text-gray-300">
               BET
             </div>
-            <div className="flex items-center bg-gray-800/60 text-gray-100 px-4 py-2 rounded-md font-medium gap-2">
+            <div className="flex items-center justify-center bg-gray-800/60 text-gray-100 px-4 py-2 rounded-md font-medium w-32 gap-2">
               <button
                 onClick={() => setBet((b) => Math.max(1, b - 1))}
                 className="bg-gray-700 px-2 py-1 rounded hover:bg-gray-600"
@@ -374,7 +309,6 @@ export default function Simulation() {
             </div>
           </div>
 
-          {/* Win Message */}
           {winMessage && (
             <div className="fixed top-20 left-0 right-0 z-50 flex justify-center">
               <div
@@ -389,7 +323,6 @@ export default function Simulation() {
             </div>
           )}
 
-          {/* Slot container */}
           <div
             className={`relative rounded-xl border-[6px] sm:border-[10px] border-gray-700 px-3 sm:px-6 py-4 sm:py-8 bg-[#222C4D] transition-shadow duration-500 ${
               showOverlay ? "" : "overflow-hidden"
@@ -403,7 +336,6 @@ export default function Simulation() {
                 : "shadow-[0_0_15px_rgba(183,188,193,0.45)]"
             }`}
           >
-            {/* Grid 3x5 - Layout kolom vertikal */}
             <div className="flex gap-2 sm:gap-3 justify-center">
               {[0, 1, 2, 3, 4].map((colIdx) => (
                 <div
@@ -426,48 +358,48 @@ export default function Simulation() {
               ))}
             </div>
 
-            {/* Overlay pilihan setelah spin 5 */}
-            {showOverlay && (
-              <div className="absolute inset-0 bg-black/95 rounded-xl z-20 flex flex-col items-center justify-center text-white px-4">
-                <p className="text-2xl font-bold text-center mb-2">
-                  Anda sudah untung!
-                </p>
-                <p className="text-lg text-center mb-6">
-                  Apakah ingin berhenti atau lanjut bermain?
-                </p>
-                <div className="flex gap-4">
-                  <button
-                    className="bg-green-600 px-8 py-3 rounded-lg font-bold hover:bg-green-700 text-lg"
-                    onClick={handleGoodEnding}
-                  >
-                    Berhenti
-                  </button>
-                  <button
-                    className="bg-red-600 px-8 py-3 rounded-lg font-bold hover:bg-red-700 text-lg"
-                    onClick={handleContinuePlaying}
-                  >
-                    Lanjut
-                  </button>
-                </div>
+            <div
+              className={`absolute inset-0 rounded-xl z-20 flex flex-col items-center justify-center text-white px-4 bg-black/95 transition-opacity duration-500 ease-in-out ${
+                overlayVisible ? "opacity-100" : "opacity-0 pointer-events-none"
+              }`}
+            >
+              <p className="text-2xl font-bold text-center mb-2">
+                Anda sudah untung!
+              </p>
+              <p className="text-lg text-center mb-6">
+                Apakah ingin berhenti atau lanjut bermain?
+              </p>
+              <div className="flex gap-4 w-full max-w-md">
+                <button
+                  className="flex-1 bg-green-600 px-8 py-3 rounded-lg font-bold hover:bg-green-700 text-lg text-center cursor-pointer"
+                  onClick={handleGoodEnding}
+                >
+                  Berhenti
+                </button>
+                <button
+                  className="flex-1 bg-red-600 px-8 py-3 rounded-lg font-bold hover:bg-red-700 text-lg text-center cursor-pointer"
+                  onClick={() => setShowOverlay(false)}
+                >
+                  Lanjut
+                </button>
               </div>
-            )}
+            </div>
           </div>
 
-          {/* Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center mt-6 gap-3 sm:gap-4 w-full">
             {!showOverlay && (
               <>
                 <button
                   className={`${
                     isAutoSpin ? "bg-red-500" : "bg-[#222C4D]"
-                  } text-white px-6 py-3 sm:px-12 sm:py-4 rounded-xl font-bold text-base sm:text-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all w-full sm:w-auto`}
+                  } text-white px-6 py-3 sm:px-12 sm:py-4 rounded-xl font-bold text-base sm:text-lg shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all w-full sm:w-auto cursor-pointer`}
                   onClick={toggleAutoSpin}
                   disabled={isSpinning || balance < bet}
                 >
                   {isAutoSpin ? "STOP AUTO" : "AUTO SPIN"}
                 </button>
                 <button
-                  className="bg-gradient-to-b from-yellow-500 to-yellow-600 text-gray-900 px-6 py-3 sm:px-12 sm:py-4 rounded-xl font-bold text-lg sm:text-xl shadow-lg hover:from-yellow-400 hover:to-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all w-full sm:w-auto"
+                  className="bg-gradient-to-b from-yellow-500 to-yellow-600 text-gray-900 px-6 py-3 sm:px-12 sm:py-4 rounded-xl font-bold text-lg sm:text-xl shadow-lg hover:from-yellow-400 hover:to-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all w-full sm:w-auto cursor-pointer"
                   onClick={spin}
                   disabled={isSpinning || balance < bet || isAutoSpin}
                 >
@@ -477,7 +409,7 @@ export default function Simulation() {
                   </div>
                 </button>
                 <button
-                  className="bg-[#222C4D] text-white px-6 py-3 sm:px-12 sm:py-4 rounded-xl font-bold text-base sm:text-lg shadow-lg hover:bg-[#2f3a63] disabled:opacity-50 disabled:cursor-not-allowed transition-all w-full sm:w-auto"
+                  className="bg-[#222C4D] text-white px-6 py-3 sm:px-12 sm:py-4 rounded-xl font-bold text-base sm:text-lg shadow-lg hover:bg-[#2f3a63] disabled:opacity-50 disabled:cursor-not-allowed transition-all w-full sm:w-auto cursor-pointer"
                   onClick={setMaxBet}
                   disabled={isSpinning || bet === balance}
                 >

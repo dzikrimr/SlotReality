@@ -20,11 +20,10 @@ export default function EndingPage({ type, onReturnChoice }: EndingPageProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
-  // Slide out of page
   const goToMaps = () => {
     if (!containerRef.current) return;
     gsap.to(containerRef.current, {
-      y: "-100%", 
+      y: "-100%",
       duration: 0.8,
       ease: "power2.inOut",
       onComplete: () => {
@@ -36,6 +35,12 @@ export default function EndingPage({ type, onReturnChoice }: EndingPageProps) {
   useEffect(() => {
     if (!containerRef.current) return;
 
+    gsap.fromTo(
+      containerRef.current,
+      { opacity: 0, y: 30 },
+      { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" }
+    );
+
     const trigger = ScrollTrigger.create({
       trigger: containerRef.current,
       start: "top top",
@@ -43,7 +48,7 @@ export default function EndingPage({ type, onReturnChoice }: EndingPageProps) {
       onUpdate: (self) => {
         if (self.direction > 0 && self.progress > 0.05) {
           goToMaps();
-          trigger.kill(); 
+          trigger.kill();
         }
       },
     });
@@ -58,7 +63,7 @@ export default function EndingPage({ type, onReturnChoice }: EndingPageProps) {
       ref={containerRef}
       className="min-h-screen flex flex-col items-center justify-center bg-gray-900 relative overflow-hidden"
     >
-      <Navbar /> 
+      <Navbar />
       <section className="w-full max-w-4xl mx-auto text-center px-4">
         <div className="max-w-[600px] mx-auto mb-8">
           <h1 className="text-5xl font-bold mb-8">
@@ -81,7 +86,7 @@ export default function EndingPage({ type, onReturnChoice }: EndingPageProps) {
 
         <div className="flex flex-col gap-4 items-center">
           <button
-            className="bg-[rgba(217,217,217,0.12)] text-white h-[50px] px-8 rounded-[15px] font-semibold tracking-wide hover:opacity-90 transition-opacity"
+            className="bg-[rgba(217,217,217,0.12)] text-white h-[50px] px-8 rounded-[15px] font-semibold tracking-wide hover:opacity-90 transition-opacity cursor-pointer"
             onClick={onReturnChoice}
           >
             Return Choice

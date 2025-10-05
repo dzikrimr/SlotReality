@@ -8,9 +8,8 @@ import { useRouter, usePathname } from "next/navigation";
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-  const pathname = usePathname(); // Ambil path saat ini
+  const pathname = usePathname();
 
-  // Fungsi untuk cek apakah menu aktif
   const isActive = (path: string) => pathname === path;
 
   return (
@@ -29,7 +28,6 @@ const Navbar: React.FC = () => {
           />
         </div>
 
-        {/* Desktop Navigation */}
         <div className="hidden md:flex items-center bg-white/15 backdrop-blur-lg rounded-2xl border border-white/30 shadow-2xl h-10 px-4 md:px-6">
           <button
             className={`${
@@ -59,7 +57,6 @@ const Navbar: React.FC = () => {
           </button>
         </div>
 
-        {/* Support (Desktop only) */}
         <div className="hidden md:block flex-shrink-0">
           <button
             className={`${
@@ -71,7 +68,6 @@ const Navbar: React.FC = () => {
           </button>
         </div>
 
-        {/* Mobile Burger Button */}
         <div className="md:hidden flex items-center">
           <button
             onClick={() => setIsOpen(!isOpen)}
@@ -82,7 +78,6 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Mobile Fullscreen Menu */}
       {isOpen && (
         <div className="fixed inset-0 z-30 bg-[#0A0F1F]/85 flex flex-col justify-center items-center space-y-6">
           <button

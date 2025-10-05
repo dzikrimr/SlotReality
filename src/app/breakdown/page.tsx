@@ -17,7 +17,7 @@ export default function Breakdown() {
       setIsExiting(true);
       setTimeout(() => {
         router.push("/help");
-      }, 500); // durasi exit animation
+      }, 500); 
     }
   };
 
@@ -34,7 +34,6 @@ export default function Breakdown() {
         >
           <Navbar />
 
-          {/* Gradient bawah */}
           <div className="absolute bottom-0 left-0 w-full h-80 bg-gradient-to-t from-[#737373]/40 to-transparent pointer-events-none"></div>
 
           <div className="relative max-w-7xl mx-auto py-16 md:py-4 z-10">
@@ -53,7 +52,6 @@ export default function Breakdown() {
                   </h1>
 
                   <div className="grid md:grid-cols-2 gap-6 mb-2">
-                    {/* Kode Palsu */}
                     <div className="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 shadow-xl p-6">
                       <div className="font-mono text-xs leading-relaxed">
                         <div className="text-purple-400">
@@ -95,7 +93,6 @@ export default function Breakdown() {
                       </div>
                     </div>
 
-                    {/* Video Lokal dengan Subtitle */}
                     <div className="bg-gradient-to-br from-slate-700/50 to-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-600/50 shadow-xl flex items-center justify-center p-2">
                       <video
                         src="/videos/judi.mp4"
@@ -144,10 +141,9 @@ export default function Breakdown() {
             </AnimatePresence>
           </div>
 
-          {/* Tombol panah */}
           <button
             onClick={handleArrowClick}
-            className="fixed right-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors z-20"
+            className="fixed right-8 top-1/2 -translate-y-1/2 text-white/50 hover:text-white transition-colors z-20 cursor-pointer"
           >
             <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
